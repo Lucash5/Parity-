@@ -5,20 +5,18 @@ using UnityEngine;
 public class PlayerMovement : MonoBehaviour
 {
     //Pelaajan nopeus
-    public float speed = 350;
-    public float jumpForce = 350;
+    public float speed = 100;
+    public float jumpForce = 200;
     public AudioClip jumpsound;
     AudioSource AS;
 
     Rigidbody rb;
-    Animator anim;
     Vector3 playerInput; // pelaajan syötteen tallennukseen
 
     // Start is called before the first frame update
     void Start()
     {
         rb = GetComponent<Rigidbody>();
-        anim = GetComponentInChildren<Animator>();
         AS = GetComponent<AudioSource>();
     }
 
@@ -39,7 +37,6 @@ public class PlayerMovement : MonoBehaviour
                 AS.PlayOneShot(jumpsound, 0.5f);
             }
         }
-        anim.SetFloat("velocity", playerInput.magnitude);
     }
 
     private void FixedUpdate()

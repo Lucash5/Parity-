@@ -34,7 +34,6 @@ public class BuildingTool : MonoBehaviour
 
         if (Physics.Raycast(ray, out hit, rayDist))
         {
-            Debug.Log(Vector3.Distance(cam.transform.position, hit.point));
             Transform objectHit = hit.transform;
 
             Vector3 newPos = hit.point;
@@ -45,6 +44,7 @@ public class BuildingTool : MonoBehaviour
             //place the object when left click is pressed
             if (Input.GetMouseButtonDown(1))
             {
+                Debug.Log(Vector3.Distance(cam.transform.position, hit.point));
                 GameObject newObj = Instantiate(prefab, newPos, Quaternion.identity);
 
                 if (objectHit.GetComponent<BuildingBlock>())
