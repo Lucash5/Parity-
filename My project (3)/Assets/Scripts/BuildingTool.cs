@@ -8,6 +8,9 @@ public class BuildingTool : MonoBehaviour
     public bool mode;
     public float rayDist;
     public GameObject prefab;
+    public GameObject prefab1;
+    public GameObject SelectedPrefab;
+    public int blockid;
     GameObject previewObject;
 
     public Camera cam;
@@ -27,6 +30,7 @@ public class BuildingTool : MonoBehaviour
     {
         InstantiateAtMousePos();
         CheckForLaunch();
+        CheckForPrefab();
     }
 
     void InstantiateAtMousePos()
@@ -55,7 +59,7 @@ public class BuildingTool : MonoBehaviour
                     return;
                 
 
-                GameObject newObj = Instantiate(prefab, newPos, Quaternion.identity);
+                GameObject newObj = Instantiate(SelectedPrefab, newPos, Quaternion.identity);
 
                 if (rootObject == null)
                 {
@@ -68,7 +72,11 @@ public class BuildingTool : MonoBehaviour
                     newObj.transform.parent = objectHit;
                 }
 
-                Debug.Log("Placed " + prefab.name + " on " + objectHit.name);
+                
+                SelectedPrefab.transform.rotation = Quaternion.Euler(0,90,0);
+                
+                
+                Debug.Log("Placed " + SelectedPrefab.name + " on " + objectHit.name);
                 anim.Play("PlaceBlock");
             }
 
@@ -93,6 +101,21 @@ public class BuildingTool : MonoBehaviour
                 Rigidbody rb = rootObject.AddComponent<Rigidbody>();
                 rb.mass = rootObject.transform.childCount;
             }
+        }
+    }
+
+    void CheckForPrefab()
+    {
+        if (Input.GetKeyDown(KeyCode.Alpha2))
+        {
+            SelectedPrefab = prefab1;
+            blockid = 1;
+
+        }
+        else if (Input.GetKeyDown(KeyCode.Alpha1))
+        {
+            SelectedPrefab = prefab;
+            blockid = 0;
         }
     }
 }
