@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class BuildingTool : MonoBehaviour
 {
+    public float rootObjectUpMultiplier = 2f;
     public bool mode;
     public float rayDist;
     public GameObject prefab;
@@ -11,6 +12,8 @@ public class BuildingTool : MonoBehaviour
 
     public Camera cam;
     Animator anim;
+
+    GameObject rootObject;
 
     // Start is called before the first frame update
     void Start()
@@ -46,7 +49,19 @@ public class BuildingTool : MonoBehaviour
             if (Input.GetMouseButtonDown(1))
             {
                 Debug.Log(Vector3.Distance(cam.transform.position, hit.point));
+
+                // JOS OLET JO LUONUT ROOT OBJEKTIN JA ET OSU BUILDINGBLOCKKIIN POISTU TÄSTÄ KOKONAAN
+                if (rootObject != null && !objectHit.GetComponent<BuildingBlock>())
+                    return;
+                
+
                 GameObject newObj = Instantiate(prefab, newPos, Quaternion.identity);
+
+                if (rootObject == null)
+                {
+                    rootObject = newObj;
+                    rootObject.transform.position += Vector3.up * rootObjectUpMultiplier;
+                }
 
                 if (objectHit.GetComponent<BuildingBlock>())
                 {
@@ -71,6 +86,13 @@ public class BuildingTool : MonoBehaviour
 
     void CheckForLaunch()
     {
-
+        if (Input.GetKeyDown(KeyCode.L))
+        {
+            if (rootObject != null)
+            {
+                Rigidbody rb = rootObject.AddComponent<Rigidbody>();
+                rb.mass = rootObject.transform.childCount;
+            }
+        }
     }
 }
