@@ -45,7 +45,12 @@ public class BuildingTool : MonoBehaviour
             //place the object when left click is pressed
             if (Input.GetMouseButtonDown(1))
             {
-                Instantiate(prefab, newPos, Quaternion.identity);
+                GameObject newObj = Instantiate(prefab, newPos, Quaternion.identity);
+
+                if (objectHit.GetComponent<BuildingBlock>())
+                {
+                    newObj.transform.parent = objectHit;
+                }
 
                 Debug.Log("Placed " + prefab.name + " on " + objectHit.name);
                 anim.Play("PlaceBlock");
