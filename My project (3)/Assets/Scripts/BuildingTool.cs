@@ -23,6 +23,7 @@ public class BuildingTool : MonoBehaviour
     private void Update()
     {
         InstantiateAtMousePos();
+        CheckForLaunch();
     }
 
     void InstantiateAtMousePos()
@@ -62,10 +63,14 @@ public class BuildingTool : MonoBehaviour
             }
         }
     }
-
     private void OnDrawGizmos()
     {
         Gizmos.color = Color.red;
         Gizmos.DrawRay(cam.transform.position, cam.transform.forward * rayDist);
+    }
+
+    void CheckForLaunch()
+    {
+
     }
 }
