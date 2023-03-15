@@ -65,6 +65,7 @@ public class BuildingTool : MonoBehaviour
                 {
                     rootObject = newObj;
                     rootObject.transform.position += Vector3.up * rootObjectUpMultiplier;
+                   
                 }
 
                 if (objectHit.GetComponent<BuildingBlock>())
@@ -72,8 +73,9 @@ public class BuildingTool : MonoBehaviour
                     newObj.transform.parent = objectHit;
                 }
 
-                
-                SelectedPrefab.transform.rotation = Quaternion.Euler(0,90,0);
+
+
+                //newObj.transform.rotation = Quaternion.Euler(hit.normal);
                 
                 
                 Debug.Log("Placed " + SelectedPrefab.name + " on " + objectHit.name);
@@ -99,7 +101,13 @@ public class BuildingTool : MonoBehaviour
             if (rootObject != null)
             {
                 Rigidbody rb = rootObject.AddComponent<Rigidbody>();
+                BoxCollider bc = rootObject.AddComponent<BoxCollider>(); 
                 rb.mass = rootObject.transform.childCount;
+
+                foreach (WheelController wc in rootObject.GetComponentsInChildren<WheelController>())
+                {
+                    wc.GetParentRB(rb);
+                }
             }
         }
     }

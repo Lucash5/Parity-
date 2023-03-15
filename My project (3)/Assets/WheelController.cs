@@ -6,12 +6,9 @@ public class WheelController : MonoBehaviour
 {
     public Transform rotatingPart;
     public float rotSpeed = 100;
+    public float wheelForce = 30;
+    Rigidbody parentRB;
 
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
 
     // Update is called once per frame
     void Update()
@@ -19,6 +16,14 @@ public class WheelController : MonoBehaviour
         if (Input.GetKey(KeyCode.T))
         {
             rotatingPart.Rotate(Vector3.up * rotSpeed * Time.deltaTime);
+
+            if (parentRB != null)
+                parentRB.AddForce(rotatingPart.forward * wheelForce);
         }
+    }
+
+    public void GetParentRB(Rigidbody rb)
+    {
+        parentRB = rb;
     }
 }
